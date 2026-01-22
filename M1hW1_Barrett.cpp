@@ -14,8 +14,13 @@ int main() {
 
     //Do the work - Introduce the movie/talk about it
     cout << "The movie " << movie_name << " was realeased in " << released_year << "." << endl;
+    cout << endl;
     cout << "It earned a box office gross of " << box_office << " million." << endl;
-
+    cout << endl;
+    cout << "The movie is about a young boy named Kevin who \ndefends his home from burglars after being left \nhome alone." << endl;
+    cout << endl;
+    cout << "In the movie Kevin says, \"This is my house, I have to defend it!\"" << endl;
+    cout << endl;
 
 
     return 0;
