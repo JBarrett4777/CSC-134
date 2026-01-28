@@ -11,6 +11,7 @@ Print everything out
 
 #include <iostream>
 #include <iomanip>
+using namespace std;
 
 int main(){
     // Part 1 -- Declare Variables
@@ -25,8 +26,18 @@ int main(){
     double cost, customer_price, profit; // all in $
 
     // Part 2 -- Get the input
+    cout << "Welcome to the Crate Program." << endl;
+    cout << "Enter the crate dimensions." << endl;
+
+    cout << "What's the crate length? ";
+    cin >> length;
+    cout << "What's the crate width? ";
+    cin >> width;
+    cout << "What's the crate height? ";
+    cin >> height;
 
     // Part 3 -- Do the Calculations
+
 
     // Part 4 -- Print the output
 
