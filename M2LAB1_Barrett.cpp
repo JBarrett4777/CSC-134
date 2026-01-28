@@ -13,6 +13,23 @@ Print everything out
 #include <iomanip>
 
 int main(){
+    // Part 1 -- Declare Variables
+    // Coonstant variables (don't change)
+    const double COST_PER_CUBIC_FOOT = 0.23;
+    const double CHARGE_PER_CUBIC_FOOT = 0.5;
+
+    //Crate variables
+    double length, width, height, volume; // all in feet
+
+    //Money variables
+    double cost, customer_price, profit; // all in $
+
+    // Part 2 -- Get the input
+
+    // Part 3 -- Do the Calculations
+
+    // Part 4 -- Print the output
+
 
     return 0;
 }
