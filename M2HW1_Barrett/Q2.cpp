@@ -1,6 +1,6 @@
 /*
 CSC 134
-M2HW1 - Gold (Q1)
+M2HW1 - Gold (Q2)
 Janiya Barrett
 2/9/26
 */
