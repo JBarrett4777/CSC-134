@@ -6,19 +6,20 @@ Janiya Barrett
 */
 
 #include <iostream>
-#include <iomanip>
-#include <string>
+#include <iomanip> // for decimal places
 using namespace std;
 
 int main() {
+    // Variables
     string name;
-    double startingBalance, deposit, withdrawal;
+    double starting_balance, deposit, withdrawal;
 
-    cout << "Enter your full name: ";
-    getline(cin, name);   // allows spaces
+    // Get input from user
+    cout << "What's your name: ";
+    cin >> name;
 
     cout << "Enter starting account balance: ";
-    cin >> startingBalance;
+    cin >> starting_balance;
 
     cout << "Enter deposit amount: ";
     cin >> deposit;
@@ -26,16 +27,16 @@ int main() {
     cout << "Enter withdrawal amount: ";
     cin >> withdrawal;
 
-    // Generate an account number (simple example)
-    int accountNumber = 123456;
-
-    double finalBalance = startingBalance + deposit - withdrawal;
-
-    cout << fixed << setprecision(2);
+    // Make account number and add final balance variable
+    int account_num = 676767;
+    double final_balance = starting_balance + deposit - withdrawal;
+    
+    // Final display (What the user sees)
+    cout << setprecision(2) << fixed;
     cout << "\n--- Account Summary ---\n";
     cout << "Name on account: " << name << endl;
-    cout << "Account number: " << accountNumber << endl;
-    cout << "Final balance: $" << finalBalance << endl;
+    cout << "Account number: " << account_num << endl;
+    cout << "Final account balance: $" << final_balance << endl;
 
     return 0;
 }
