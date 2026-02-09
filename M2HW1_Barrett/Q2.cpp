@@ -10,10 +10,18 @@ Janiya Barrett
 using namespace std;
 
 int main() {
-    double length, width, height;
-    double costPerCubicFoot = 0.30;   // updated
-    double chargePerCubicFoot = 0.52; // updated
+    //Part 1 -- Declare variables
+    // Constant variables
+    const double COST_PER_CUBIC_FOOT = 0.3;
+    const double CHARGE_PER_CUBIC_FOOT = 0.52;
 
+    // Crate variables
+    double length, width, height, volume; // All in feet
+
+    //Money variables
+    double cost, customer_price, profit; // All in $
+
+    // Part 2 -- Get the input (STOPPED RIGHT HERE)
     cout << "Enter crate length: ";
     cin >> length;
 
@@ -24,8 +32,8 @@ int main() {
     cin >> height;
 
     double volume = length * width * height;
-    double cost = volume * costPerCubicFoot;
-    double charge = volume * chargePerCubicFoot;
+    double cost = volume * COST_PER_CUBIC_FOOT;
+    double charge = volume * CHARGE_PER_CUBIC_FOOT;
     double profit = charge - cost;
 
     cout << fixed << setprecision(2);
