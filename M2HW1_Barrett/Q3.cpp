@@ -1,6 +1,6 @@
 /*
 CSC 134
-M2HW1 - Gold (Q1)
+M2HW1 - Gold (Q3)
 Janiya Barrett
 2/9/26
 */
@@ -9,22 +9,26 @@ Janiya Barrett
 using namespace std;
 
 int main() {
-    int pizzas, slicesPerPizza, visitors;
+    // Variables
+    double pizzas, pizza_slices, visitors;
 
-    cout << "How many pizzas are ordered? ";
+    // Get input from the user
+    cout << "How many pizzas did you order? ";
     cin >> pizzas;
 
     cout << "How many slices per pizza? ";
-    cin >> slicesPerPizza;
+    cin >> pizza_slices;
 
     cout << "How many visitors are coming? ";
     cin >> visitors;
 
-    int totalSlices = pizzas * slicesPerPizza;
-    int slicesNeeded = visitors * 3;
-    int leftovers = totalSlices - slicesNeeded;
+    // Do calculations 
+    double total_slices = pizzas * pizza_slices;
+    double needed_slices = visitors * 3;
+    double leftover = total_slices - needed_slices;
 
-    cout << "\nLeftover slices: " << leftovers << endl;
+    // Output(What the user sees)
+    cout << "There are " << leftover << " slices left over." << endl;
 
     return 0;
 }
