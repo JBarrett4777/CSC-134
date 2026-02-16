@@ -14,6 +14,10 @@ int roll();
 
 // main() goes here
 int main() {
+    // Seed the random number generator
+    int seed = time(0);
+    srand(seed);
+
     int number = roll();
     cout << "You rolled a " << number << endl;
     return 0;
@@ -24,6 +28,7 @@ int main() {
 int roll() {
     // ran() gives a large radom number
     // %6 divides by six, and keeps the remainder
-    int my_roll = rand() %6;
+    // finally, add 1 sp it's 1 to 6, not zero to five
+    int my_roll = (rand() %6) + 1;
     return my_roll;
 }
