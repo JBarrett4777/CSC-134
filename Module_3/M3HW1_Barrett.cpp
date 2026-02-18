@@ -23,10 +23,19 @@ int main() {
         // Variables
         string answer;
 
-        //Introduction
+        // Introduction and get user input
         cout << "Hello. I’m a C++ programmer!" << endl;
-        cout << "Do you like me? Please type yes or no. " << endl; //(ENDED RIGHT HERE)
-        // Put your code for Program 1 here
+        cout << "Do you like me? Please type yes or no. " << endl; 
+        cin >> answer;
+
+        //Functions (If/else statements)
+        if (answer == "yes"){
+            cout << "That's great! I'm sure we'll ger along. " << endl;
+        else if asnwe
+        }
+
+
+        
     } 
     else if (choice == 2) {
         cout << "Here is question two..." << endl;
