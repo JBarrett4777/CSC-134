@@ -29,9 +29,11 @@ int main() {
         cin >> answer;
 
         //Functions (If/else statements)
-        if (answer == "yes"){
+        if (answer == "yes") {
             cout << "That's great! I'm sure we'll ger along. " << endl;
-        else if asnwe
+        }
+        else if (answer == "no") {
+            cout << "Well, maybe you'll learn to like me later" << endl;
         }
 
 
