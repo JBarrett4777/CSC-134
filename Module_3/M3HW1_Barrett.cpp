@@ -4,6 +4,7 @@
 // 2/18/26
 
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 int main() {
@@ -41,13 +42,34 @@ int main() {
 
     } 
     else if (choice == 2) {
-        double meal_price;
+        double meal_price, tax, tip, total;
+        int order_type;
+        const double TAX_RATE = 0.08;
+        const double TIP_RATE = 0.15;
+
         // Ask the user for the meal price
-        cout << "Enter the price of your meal: " << endl;
+        cout << "Please enter the price of your meal: " << endl;
         cin >> meal_price;
+
         // Ask whether the order is dine-in or takeout
-        // Calculate price with tax/tip
+        cout << "Please enter 1 if the order is dine in, and 2 if it is to go: " << endl;
+        cin >> order_type;
+
+        // Calculate tax
+        tax = meal_price * TAX_RATE;
+
+        // Add tip only if dine-in
+        if (order_type == 1){
+            tip = meal_price * TIP_RATE;
+        }
+
+        // Calculate Total
+        total = meal_price + tax + tip;
+
         // Print a formatter reciept with meal price, tax, maybe tip, and total
+        cout << setprecision(2) << fixed;
+        cout << endl;
+        cout << "YOUR ORDER" << endl << "------------------" << endl; //STOPPED HERE (FINISH ADDING RECIPT FORMAT)
     } 
     else if (choice == 3) {
         cout << "Here is question three..." << endl;
