@@ -35,13 +35,19 @@ int main() {
         else if (answer == "no") {
             cout << "Well, maybe you'll learn to like me later" << endl;
         }
+        else {
+            cout << "If you're not sure... that's OK. " << endl;
+        }
 
-
-        
     } 
     else if (choice == 2) {
-        cout << "Here is question two..." << endl;
-        // Put your code for Program 2 here
+        double meal_price;
+        // Ask the user for the meal price
+        cout << "Enter the price of your meal: " << endl;
+        cin >> meal_price;
+        // Ask whether the order is dine-in or takeout
+        // Calculate price with tax/tip
+        // Print a formatter reciept with meal price, tax, maybe tip, and total
     } 
     else if (choice == 3) {
         cout << "Here is question three..." << endl;
