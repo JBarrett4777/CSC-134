@@ -6,9 +6,6 @@
 #include <iostream>
 using namespace std;
 
-#include <iostream>
-using namespace std;
-
 // List PROTOTYPES of all the choices up here
 // rename these to something that makes sense!
 void drink();
