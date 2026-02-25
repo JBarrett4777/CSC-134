@@ -9,9 +9,9 @@ using namespace std;
 
 // Programs
 void question_one();
-void question_one();
-void question_one();
-void question_one();
+void question_two();
+void question_three();
+void question_four();
 
 int main() {
     int choice;
@@ -21,28 +21,24 @@ int main() {
     cout << "2. Question Two" << endl;
     cout << "3. Question Three" << endl;
     cout << "4. Question Four" << endl;
-    cout << "5. Exit" << endl;
-    cout << "----------------------" << endl;
+    cout << "------------------" << endl;
     cout << "Select an option: "; // The prompt for the user to type
     cin >> choice;
 
     if (choice == 1) {
-
+        void question_one();
     } 
     else if (choice == 2) {
-        
+        void question_two();
     } 
     else if (choice == 3) {
-        
+        void question_three();   
     } 
     else if (choice == 4) {
-
-    } 
-    else if (choice == 5) {
-        
+        void question_four();
     } 
     else {
-       
+        cout << "I didn't understand that" << endl;
     }
 
     return 0;
@@ -68,7 +64,7 @@ void question_one(){
         cout << "If you're not sure... that's OK. " << endl;
     }
 }
-void question_one(){
+void question_two(){
     // Variables
     double meal_price, tax, tip, total;
     int order_type;
@@ -97,11 +93,17 @@ void question_one(){
     // Print a formatter reciept with meal price, tax, maybe tip, and total
     cout << setprecision(2) << fixed;
     cout << endl;
-    cout << "YOUR ORDER" << endl << "------------------" << endl; //STOPPED HERE (FINISH ADDING RECIPT FORMAT)
-}
-void question_one(){
+    cout << "YOUR ORDER" << endl << "\n------------------\n" << endl; 
+    cout << "Meal Price: $" << meal_price << endl;
+    cout << "Tax (7%):   $" << tax << endl;
+    cout << "Tip (15%):  $" << tip << endl;
+    cout << "-------------------\n";
+    cout << "Total:      $" << total << endl;
 
 }
-void question_one(){
+void question_three(){
+
+}
+void question_four(){
 
 }
