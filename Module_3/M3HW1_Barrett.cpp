@@ -28,16 +28,16 @@ int main() {
     cin >> choice;
 
     if (1 == choice) {
-        void question1();
+        question1();
     } 
     else if (2 == choice) {
-        void question2();
+        question2();
     } 
     else if (3 == choice) {
-        void question3();   
+        question3();   
     } 
     else if (4 == choice) {
-        void question4();
+        question4();
     } 
     else {
         cout << "I didn't understand that" << endl;
