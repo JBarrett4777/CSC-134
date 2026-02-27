@@ -5,13 +5,15 @@
 
 #include <iostream>
 #include <iomanip>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 // Programs
-void question_one();
-void question_two();
-void question_three();
-void question_four();
+void question1();
+void question2();
+void question3();
+void question4();
 
 int main() {
     int choice;
@@ -25,17 +27,17 @@ int main() {
     cout << "Select an option: "; // The prompt for the user to type
     cin >> choice;
 
-    if (choice == 1) {
-        void question_one();
+    if (1 == choice) {
+        void question1();
     } 
-    else if (choice == 2) {
-        void question_two();
+    else if (2 == choice) {
+        void question2();
     } 
-    else if (choice == 3) {
-        void question_three();   
+    else if (3 == choice) {
+        void question3();   
     } 
-    else if (choice == 4) {
-        void question_four();
+    else if (4 == choice) {
+        void question4();
     } 
     else {
         cout << "I didn't understand that" << endl;
@@ -45,7 +47,7 @@ int main() {
 }
 
 // List of ALL functions of all the choices at the bottom
-void question_one(){
+void question1(){
     string answer;
 
     // Introduction and get user input
@@ -64,7 +66,7 @@ void question_one(){
         cout << "If you're not sure... that's OK. " << endl;
     }
 }
-void question_two(){
+void question2(){
     // Variables
     double meal_price, tax, tip, total;
     int order_type;
@@ -101,9 +103,9 @@ void question_two(){
     cout << "Total:      $" << total << endl;
 
 }
-void question_three(){
+void question3(){
 
 }
-void question_four(){
+void question4(){
 
 }
