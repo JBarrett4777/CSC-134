@@ -162,5 +162,8 @@ void fish() {
 }
 
 void question4(){
-
+    int num1, num2;
+    cout << "Enter two numbers: ";
+    cin >> num1 >> num2;
+    cout << "The sum is: " << num1 + num2 << endl;
 }
