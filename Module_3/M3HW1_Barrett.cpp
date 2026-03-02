@@ -70,8 +70,8 @@ void question2(){
     // Variables
     double meal_price, tax, tip, total;
     int order_type;
-    const double TAX_RATE = 0.08;
-    const double TIP_RATE = 0.15;
+    const double tax_rate = 0.08;
+    const double tip_rate = 0.15;
 
     // Ask the user for the meal price
     cout << "Please enter the price of your meal: " << endl;
@@ -82,13 +82,14 @@ void question2(){
     cin >> order_type;
 
     // Calculate tax
-    tax = meal_price * TAX_RATE;
+    tax = meal_price * tax_rate;
 
     // Add tip only if dine-in
     if (order_type == 1){
-        tip = meal_price * TIP_RATE;
+        tip = meal_price * tip_rate;
+    } else {
+        tip = 0;
     }
-
     // Calculate Total
     total = meal_price + tax + tip;
 
