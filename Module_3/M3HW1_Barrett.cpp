@@ -5,8 +5,8 @@
 
 #include <iostream>
 #include <iomanip>
-#include <cstdlib>
-#include <ctime>
+#include <cstdlib> // for random
+#include <ctime> // for time
 using namespace std;
 
 // Programs
@@ -46,7 +46,7 @@ int main() {
     return 0;
 }
 
-// List of ALL functions of all the choices at the bottom
+// All of the functions listed for the choices 
 void question1(){
     string answer;
 
@@ -96,11 +96,11 @@ void question2(){
     // Print a formatter reciept with meal price, tax, maybe tip, and total
     cout << setprecision(2) << fixed;
     cout << endl;
-    cout << "YOUR ORDER" << endl << "\n------------------\n" << endl; 
+    cout << "YOUR ORDER" << "\n------------------\n" << endl; 
     cout << "Meal Price: $" << meal_price << endl;
     cout << "Tax (7%):   $" << tax << endl;
     cout << "Tip (15%):  $" << tip << endl;
-    cout << "-------------------\n";
+    cout << "------------------\n";
     cout << "Total:      $" << total << endl;
 
 }
@@ -162,8 +162,27 @@ void fish() {
 }
 
 void question4(){
-    int num1, num2;
-    cout << "Enter two numbers: ";
-    cin >> num1 >> num2;
+    int roll();
+    int seed = time(0);
+    srand(seed);
+    int num1, num2, total, input;
+    num1 = roll();
+    num2 = roll();
+    total = num1 + num2;
+    cout << "What is " << num1 << " + " << num2 << "? " << endl;
+    if (input == total) {
+        cout << "Correct!" << endl;
+    }
+    else {
+        cout << "Incorrect." << endl;
+    }
     cout << "The sum is: " << num1 + num2 << endl;
 }
+
+    int roll(){
+    // ran() gives a large random number
+    // %6 divides by 6, and keeps the remainder
+    // finally, add 1 so it's 1 to 6, not 0 to 5
+    int my_roll = (rand() % 6 ) + 1;
+    return my_roll;
+    }
