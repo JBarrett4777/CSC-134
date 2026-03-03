@@ -170,13 +170,14 @@ void question4(){
     num2 = roll();
     total = num1 + num2;
     cout << "What is " << num1 << " + " << num2 << "? " << endl;
+    cin >> input;
     if (input == total) {
         cout << "Correct!" << endl;
     }
     else {
         cout << "Incorrect." << endl;
     }
-    cout << "The sum is: " << num1 + num2 << endl;
+    cout << "The sum is: " << total << endl;
 }
 
     int roll(){
