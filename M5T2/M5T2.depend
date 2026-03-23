@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1774277417 source:c:\users\barrettj4777\desktop\m5t2\main.cpp
+	<iostream>
+	"m5t2.h"
+
+1774278146 c:\users\barrettj4777\desktop\m5t2\m5t2.h
+	<iostream>
+
