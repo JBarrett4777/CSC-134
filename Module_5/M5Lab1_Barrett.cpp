@@ -42,17 +42,18 @@ int main() {
                 validChoice = true;
             } else {
                 cout << "\n[!] I didn't understand that. Try again before you get sniped!" << endl;
-                // Since validChoice is still false, it loops back to the menu
             }
         }
 
-        // Ask to play again
-        cout << "\n\nWould you like to drop back into the match? (y/n): ";
+        cout << "\n\nWould you like to drop into another match? (y/n): ";
         cin >> playAgain;
 
+        while (playAgain != 'y' && playAgain != 'Y' && playAgain != 'n' && playAgain != 'N') {
+            cout << "[!] Invalid input. Type 'y' to play again or 'n' to quit: ";
+            cin >> playAgain;
+        }
+
     } while (playAgain == 'y' || playAgain == 'Y');
-
-    cout << "Thanks for playing! GG." << endl;
-
-    return 0;
+        cout << "Thanks for playing! GG." << endl;
+        return 0;
 }
