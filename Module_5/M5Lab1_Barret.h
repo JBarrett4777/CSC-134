@@ -24,8 +24,10 @@ void drink() {
     cin >> secondChoice;
     if (secondChoice == 1) {
         cout << "The glow shines through the leaves! They found you. GAME OVER." << endl;
-    } else {
+    } else if (secondChoice == 2){
         cout << "You build a massive metal fort. People see you, but they can't hit you. You survive the glow!" << endl;
+    } else {
+        cout << "INVALID!!! You took toooo long to decide and you got sniped. GAME OVER." << endl;
     }
 }
 
@@ -40,10 +42,13 @@ void bottle() {
     cin >> secondChoice;
     if (secondChoice == 1) {
         cout << "They start coughing and fall off their build. You take their loot!" << endl;
+    } else if (secondChoice == 2) {
+         cout << "You accidentally activated it while trying to get rid of it. You stink yourself out of the match!" << endl;
     } else {
-        cout << "You accidentally activated it while trying to get rid of it. You stink yourself out of the match!" << endl;
+        cout << "INVALID!!! You took toooo long to decide and you got sniped. GAME OVER." << endl;
     }
 }
+
 void rock() {
     int secondChoice;
     cout << "You decide to throw a rock at it." << endl;
@@ -55,8 +60,10 @@ void rock() {
     cin >> secondChoice;
     if (secondChoice == 1) {
         cout << "TOTAL CHAOS! The monster attacks the squad, and you slip away in the commotion!" << endl;
-    } else {
+    } else if (secondChoice == 2) {
         cout << "IT'S A SLURP MONSTER, not a wolf! It eats your mushroom (and you sheild), then STOMPS YOU!" << endl;
+    } else {
+        cout << "INVALID!!! You took toooo long to decide and you got sniped. GAME OVER." << endl;
     }
 }
 
@@ -71,9 +78,11 @@ void fish() {
     cin >> secondChoice;
     if (secondChoice == 1) {
         cout << "You're fast again, but now you only have a grey pistol. You get eliminated in your next fight." << endl;
-    } else {
+    } else if (secondChoice == 2)  {
         cout << "You created a GOLDEN WHIPLASH! It's heavy, but the engine is so powerful it doesn't matter. You drive to VICTORY!" << endl;
-    } 
+    } else {
+        cout << "INVALID!!! You took toooo long to decide and you got sniped. GAME OVER." << endl;
+    }
 }
 
 
