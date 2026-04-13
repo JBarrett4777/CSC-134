@@ -50,7 +50,7 @@ int main() {
                 validChoice = true;
             } 
             else {
-                cout << "\n[!] I didn't understand that. Try again" << endl;
+                cout << "\n[!] I didn't understand that. Try again," << endl;
             }
         }
 

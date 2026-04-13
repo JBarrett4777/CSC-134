@@ -2,6 +2,7 @@
 #define M5HW_H
 
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 // List PROTOTYPES of all the choices up here
@@ -32,8 +33,10 @@ void question_1() {
     cout << "Enter rainfall for "<< month3 << ": ";
     cin >> rainfall_3;
 
-    rainfall_average = (rainfall_1 + rainfall_2 + rainfall_3) / 3.0; //(TODO:FINISH QUESTION 1 BY ADDUING THE LAST STATEMENT)
+    rainfall_average = (rainfall_1 + rainfall_2 + rainfall_3) / 3.0; 
 
+    cout << fixed << setprecision(2);
+    cout << "The average rainfall for " << month1 << ", " << month2 << ", and " << month1 << " is " << rainfall_average << " inches";
 }
 
 void question_2() {
