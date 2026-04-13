@@ -11,7 +11,7 @@ void question_1();
 void question_2();
 void question_3();
 void question_4();
-void question_6();
+void question_5();
 
 // List FULL FUNCTIONS of all the choices at the bottom
 void question_1() {
@@ -40,7 +40,18 @@ void question_1() {
 }
 
 void question_2() {
-    
+    double width, length, height, volume;
+
+    cout << "Enter width: ";
+    cin >> width;
+    cout << "Enter length: ";
+    cin >> length;
+    cout << "Enter height: ";
+    cin >> height;
+
+    if (width <=0 || length <=0 || height <=0){
+        //(TODO FINISH THE IF STATEMENT)
+    }
 }
 
 void question_3() {
