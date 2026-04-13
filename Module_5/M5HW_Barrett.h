@@ -14,7 +14,26 @@ void question_6();
 
 // List FULL FUNCTIONS of all the choices at the bottom
 void question_1() {
-    
+    double rainfall_1, rainfall_2, rainfall_3, rainfall_average;
+    string month1, month2, month3;
+
+    cout << "Enter month: ";
+    cin >> month1;
+    cout << "Enter rainfall for "<< month1 << ": ";
+    cin >> rainfall_1;
+
+    cout << "Enter month: ";
+    cin >> month2;
+    cout << "Enter rainfall for "<< month2 << ": ";
+    cin >> rainfall_2;
+
+    cout << "Enter month: ";
+    cin >> month3;
+    cout << "Enter rainfall for "<< month3 << ": ";
+    cin >> rainfall_3;
+
+    rainfall_average = (rainfall_1 + rainfall_2 + rainfall_3) / 3.0; //(TODO:FINISH QUESTION 1 BY ADDUING THE LAST STATEMENT)
+
 }
 
 void question_2() {
