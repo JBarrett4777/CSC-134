@@ -49,9 +49,18 @@ void question_2() {
     cout << "Enter height: ";
     cin >> height;
 
-    if (width <=0 || length <=0 || height <=0){
-        //(TODO FINISH THE IF STATEMENT)
-    }
+    while ( width <=0 || length <=0 || height <=0) {
+            cout << "Error: All dimensions must be greater than 0. \n";
+            cout << "Enter width: ";
+            cin >> width;
+            cout << "Enter length: ";
+            cin >> length;
+            cout << "Enter height: ";
+            cin >> height;
+        }
+
+    volume = width * length * height;
+    cout << "The volume of the block is " << volume << endl;
 }
 
 void question_3() {
