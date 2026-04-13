@@ -5,55 +5,64 @@
 
 
 #include <iostream>
-#include "M5Lab1_Barret.h"
+#include "M5HW_Barrett.h"
 using namespace std;
 
 int main() {
-    char playAgain; // Variable to store 'y' or 'n'
+    char choose_again; // Variable to store 'y' or 'n'
 
     do {
         int choice;
         bool validChoice = false; // To keep the menu open if they pick a wrong number
 
-        cout << "\n--- THE FORBIDDEN SLURP JUICE (FORTNITE) ---" << endl << endl;
-        cout << "As you're running to find loot, you come across a glowing blue puddle." << endl;
+        cout << "\nWelcome to the M5HW Menu" << endl << endl;
+      
 
         // Choice Menu Loop
         while (!validChoice) {
-            cout << "Do You: " << endl;
-            cout << "1. Drink it" << endl;
-            cout << "2. Bottle it" << endl;
-            cout << "3. Throw a rock at it" << endl;
-            cout << "4. Fish in it" << endl;
+            cout << "What do you want to do: " << endl;
+            cout << "1. Question 1" << endl;
+            cout << "2. Question 2" << endl;
+            cout << "3. Question 3" << endl;
+            cout << "4. Question 4" << endl;
+            cout << "5. Question 5" << endl;
             cout << "> ";
             cin >> choice;
 
             if (choice == 1) {
-                drink();
+                question_1();
                 validChoice = true;
-            } else if (choice == 2) {
-                bottle();
+            } 
+            else if (choice == 2) {
+                question_2();
                 validChoice = true;
-            } else if (choice == 3) {
-                rock();
+            } 
+            else if (choice == 3) {
+                question_3();
                 validChoice = true;
-            } else if (choice == 4) {
-                fish();
+            } 
+            else if (choice == 4) {
+                question_4();
                 validChoice = true;
-            } else {
-                cout << "\n[!] I didn't understand that. Try again before you get sniped!" << endl;
+            } 
+            else if (choice == 5) {
+                question_5();
+                validChoice = true;
+            } 
+            else {
+                cout << "\n[!] I didn't understand that. Try again" << endl;
             }
         }
 
-        cout << "\n\nWould you like to drop into another match? (y/n): ";
-        cin >> playAgain;
+        cout << "\n\nWould you like to choose another question? (y/n): ";
+        cin >> choose_again;
 
-        while (playAgain != 'y' && playAgain != 'Y' && playAgain != 'n' && playAgain != 'N') {
-            cout << "[!] Invalid input. Type 'y' to play again or 'n' to quit: ";
-            cin >> playAgain;
+        while (choose_again != 'y' && choose_again != 'Y' && choose_again != 'n' && choose_again != 'N') {
+            cout << "[!] Invalid input. Type 'y' to choose another question or 'n' to exit: ";
+            cin >> choose_again;
         }
 
-    } while (playAgain == 'y' || playAgain == 'Y');
-        cout << "Thanks for playing! GG." << endl;
+    } while (choose_again == 'y' || choose_again == 'Y');
+        cout << "Goodbye!" << endl;
         return 0;
 }
