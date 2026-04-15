@@ -20,14 +20,14 @@ char fireShot(vector<char>& mag);
 int main() {
     vector<char> magazine;   // no size yet — grows as needed
 
-    // 'S' = slime, 'W' = water
-    magazine.push_back('S');
-    magazine.push_back('W');
-    magazine.push_back('S');
-    // ... and so on
-
+    // Now let's test it
+    int slime = 3;
+    int water = 2;
+    loadMagazine(magazine, slime, water);
     // How full is it? Just ask.
-    cout << magazine.size();
+    cout << "Mag size: " << magazine.size();
+    // Show what's loaded
+    displayMagazine(magazine);   
 }
 
 // Full Functions go here
@@ -62,7 +62,7 @@ void displayMagazine(const vector<char>& mag) {
         else               w++;
     }
 
-    cout << "Magazine: " << mag.size()
+    cout << " Magazine: " << mag.size()
          << " remaining ("
          << s << " slime, "
          << w << " water)\n";
