@@ -28,6 +28,15 @@ int main() {
     cout << "Mag size: " << magazine.size();
     // Show what's loaded
     displayMagazine(magazine);   
+
+    // Fire a shot
+    if (!magazine.empty()) {
+        char s = fireShot(magazine);
+        cout << "You fired: " << s << endl;
+    }
+
+    // list again after the shot
+    displayMagazine(magazine);
 }
 
 // Full Functions go here
