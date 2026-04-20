@@ -1,3 +1,8 @@
+// M6LAB2
+// CSC 134
+// Janiya Barrett
+// 4/20/26
+
 #include <iostream>
 #include <string>
 #include <vector>
