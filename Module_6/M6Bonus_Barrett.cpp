@@ -3,26 +3,25 @@
 // Janiya Barrett
 // 4/22/26
 
-#include <iostream>  // Required for console output [cite: 197]
-#include <fstream>   // Required for file output (ofstream) [cite: 197]
-#include <cmath>     // Required for distance formula calculations [cite: 172]
-
+#include <iostream>  
+#include <fstream>   
+#include <cmath>  
 using namespace std;
 
 int main() {
     // 1. Define dimensions and file path
-    const int width = 500;  // Must be at least 100 [cite: 44]
+    const int width = 500;  
     const int height = 500;
     const int maxColor = 255; // Standard max color value 
     
-    ofstream outFile("smiley.ppm"); // Open ofstream to 'smiley.ppm' [cite: 129]
+    ofstream outFile("smiley.ppm"); 
 
     if (!outFile) {
         cerr << "Error: Could not open file for writing." << endl;
         return 1;
     }
 
-    // 2. Write the PPM Header [cite: 130]
+    // 2. Write the PPM Header 
     // Line 1: Magic number 
     outFile << "P3" << endl;
     // Line 2: Width and Height 
@@ -30,15 +29,15 @@ int main() {
     // Line 3: Maximum color value 
     outFile << maxColor << endl;
 
-    // 3. Use nested loops to write RGB values for each pixel [cite: 131]
-    for (int y = 0; y < height; y++) {       // Outer loop handles rows [cite: 96]
-        for (int x = 0; x < width; x++) {   // Inner loop handles columns [cite: 96]
+    // 3. Use nested loops to write RGB values for each pixel 
+    for (int y = 0; y < height; y++) {       // Outer loop handles rows 
+        for (int x = 0; x < width; x++) {   // Inner loop handles columns 
             
             // Define centers for geometry
             int centerX = width / 2;
             int centerY = height / 2;
 
-            // Math: Distance Formula sqrt((x-cx)^2 + (y-cy)^2) [cite: 172]
+            // Math: Distance Formula sqrt((x-cx)^2 + (y-cy)^2) 
             double distToCenter = sqrt(pow(x - centerX, 2) + pow(y - centerY, 2));
 
             // Eye positions relative to center
@@ -68,10 +67,10 @@ int main() {
                 outFile << "0 0 0 ";
             }
         }
-        outFile << "\n"; // Newline after each row to keep it readable [cite: 184]
+        outFile << "\n"; // Newline after each row to keep it readable 
     }
 
-    outFile.close(); // Always close the file to prevent truncation [cite: 132, 186]
+    outFile.close(); // Always close the file to prevent truncation 
     cout << "Image 'smiley.ppm' generated successfully." << endl;
 
     return 0;
