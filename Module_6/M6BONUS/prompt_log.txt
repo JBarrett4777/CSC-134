@@ -1,0 +1,99 @@
+﻿Attempt 1
+
+
+Prompt: Write a C++ program that generates a 500x500 PPM image file called 'smiley.ppm'. Use nested for loops to iterate through each pixel (x, y). The background should be black (0, 0, 0). Draw a cyan (0, 255, 255) smiley face using the distance formula. The face should include a large outer circle for the head, two smaller circles for eyes, and a semi-circle arc for the mouth. Please include comments explaining the math used for the pixel calculations. 
+
+
+ Result: 
+#include <iostream>  // Required for console output]
+#include <fstream>   // Required for file output (ofstream)#include <cmath>     // Required for distance formula calculations 
+
+
+using namespace std;
+
+
+int main() {
+    // 1. Define dimensions and file path
+    const int width = 500;  // Must be at least 100
+    const int height = 500;
+    const int maxColor = 255; // Standard max color value 
+    
+    ofstream outFile("smiley.ppm"); // Open ofstream to 'smiley.ppm']
+
+
+    if (!outFile) {
+        cerr << "Error: Could not open file for writing." << endl;
+        return 1;
+    }
+
+
+    // 2. Write the PPM Header    // Line 1: Magic number 
+    outFile << "P3" << endl;
+    // Line 2: Width and Height 
+    outFile << width << " " << height << endl;
+    // Line 3: Maximum color value 
+    outFile << maxColor << endl;
+
+
+    // 3. Use nested loops to write RGB values for each pixel
+    for (int y = 0; y < height; y++) {       // Outer loop handles rows 
+        for (int x = 0; x < width; x++) {   // Inner loop handles columns            
+            // Define centers for geometry
+            int centerX = width / 2;
+            int centerY = height / 2;
+
+
+            // Math: Distance Formula sqrt((x-cx)^2 + (y-cy)^2)
+            double distToCenter = sqrt(pow(x - centerX, 2) + pow(y - centerY, 2));
+
+
+            // Eye positions relative to center
+            double distToLeftEye = sqrt(pow(x - (centerX - 70), 2) + pow(y - (centerY - 60), 2));
+            double distToRightEye = sqrt(pow(x - (centerX + 70), 2) + pow(y - (centerY - 60), 2));
+
+
+            bool isCyan = false;
+
+
+            // DRAW HEAD: A ring with a radius of approximately 180 pixels
+            if (distToCenter < 185 && distToCenter > 175) {
+                isCyan = true;
+            }
+            // DRAW EYES: Small circles with a radius of 20 pixels
+            else if (distToLeftEye < 20 || distToRightEye < 20) {
+                isCyan = true;
+            }
+            // DRAW MOUTH: Semi-circle arc [cite: 63]
+            // Checks if pixel is on the mouth radius and in the lower half of the face
+            else if (distToCenter < 110 && distToCenter > 100 && y > centerY + 20) {
+                isCyan = true;
+            }
+
+
+            // Write RGB values: Cyan (0, 255, 255) or Black (0, 0, 0)
+            if (isCyan) {
+                outFile << "0 255 255 ";
+            } else {
+                outFile << "0 0 0 ";
+            }
+        }
+        outFile << "\n"; // Newline after each row to keep it readable]
+    }
+
+
+    outFile.close(); // Always close the file to prevent truncation
+    cout << "Image 'smiley.ppm' generated successfully." << endl;
+
+
+    return 0;
+}
+
+
+What I learned: I learned about the coding graphics as a whole. Before this assignment, I did not know anything about this but the assignment was interesting.
+
+
+ Final Reflection
+- Total attempts: 1
+- Most helpful prompt technique: Making sure my prompt was throughout and using gemini
+- Biggest prompting mistake: It worked, I just had to make sure I was very specific so google gemini could give me what I wanted.
+- How I verified the code works: I ran the file in github then took the ppm file and ran it in a ppm viewer.

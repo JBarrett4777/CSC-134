@@ -1,0 +1,8 @@
+﻿Answer in 2-3 sentences each:
+1. What was the hardest part about prompting for C++ code?
+2. How did you verify that the AI-generated code was correct?
+3. What would you do differently next time you prompt for code?
+4. Which line(s) of the generated code took you the longest to understand?
+
+
+ The hardest part about prompting was making sure I was specific enough. If I wasn't specific it most likely wouldn’t have given me what I wanted. I verified the code was correct by running it in github. After I ran the code, the terminal said it ran correctly. I wouldn’t do much different for my prompt. It was solid and it gave me what I needed, greatly executed. The lines with the colors. Instead of names that the computer understand, like with python, i have to use a combination of numbers that represent each color.
