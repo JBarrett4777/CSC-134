@@ -27,5 +27,5 @@ void setName(string &name){
     //uses pass-by-refrence, changing the original
     cout << "What's your name? ";
     cin >> name;
-    
+
 }
