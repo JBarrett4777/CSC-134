@@ -1,45 +1,41 @@
-// CSC 134
-// M7LAB1
-// Janiya Barrett
-// 5/4/26
-
 #include <iostream>
 #include <vector>
 #include <random>
 #include <ctime>
-#include <cstring>
 using namespace std;
 
 // Direction constants
 enum Direction {
     NORTH = 1,
     SOUTH = 2,
-    EAST = 4,
-    WEST = 8
+    EAST  = 4,
+    WEST  = 8
 };
 
-const std::pair<int, int> DIRECTION_OFFSETS[] = {
-    {0, 0},
-    {0, -1}, // NORTH
-    {0, 1},  // SOUTH
-    {0, 0},
-    {1, 0},  // EAST
-    {0, 0},
-    {0, 0},
-    {0, 0},
-    {-1, 0}  // WEST
+// Correct direction offsets (matching enum values)
+const pair<int,int> DIRECTION_OFFSETS[] = {
+    {0,0},      // 0 (unused)
+    {0,-1},     // 1 = NORTH
+    {0,1},      // 2 = SOUTH
+    {0,0},      // 3 unused
+    {1,0},      // 4 = EAST
+    {0,0},      // 5 unused
+    {0,0},      // 6 unused
+    {0,0},      // 7 unused
+    {-1,0}      // 8 = WEST
 };
 
+// Opposites table
 const Direction OPPOSITES[] = {
     (Direction)0,
-    SOUTH,
-    NORTH,
+    SOUTH,  // NORTH opposite
+    NORTH,  // SOUTH opposite
     (Direction)0,
-    WEST,
+    WEST,   // EAST opposite
     (Direction)0,
     (Direction)0,
     (Direction)0,
-    EAST
+    EAST    // WEST opposite
 };
 
 class Cell {
@@ -50,20 +46,16 @@ private:
 public:
     Cell(int r, int c) : row(r), col(c), links(0) {}
 
-    int getRow() const { return row; }
-    int getCol() const { return col; }
-
     bool linked(Direction d) const { return (links & d) != 0; }
     void link(Direction d) { links |= d; }
-    void unlink(Direction d) { links &= ~d; }
 
     vector<Direction> getLinks() const {
-        vector<Direction> result;
-        if (linked(NORTH)) result.push_back(NORTH);
-        if (linked(SOUTH)) result.push_back(SOUTH);
-        if (linked(EAST)) result.push_back(EAST);
-        if (linked(WEST)) result.push_back(WEST);
-        return result;
+        vector<Direction> dirs;
+        if (linked(NORTH)) dirs.push_back(NORTH);
+        if (linked(SOUTH)) dirs.push_back(SOUTH);
+        if (linked(EAST))  dirs.push_back(EAST);
+        if (linked(WEST))  dirs.push_back(WEST);
+        return dirs;
     }
 };
 
@@ -71,7 +63,7 @@ class Grid {
 private:
     int rows, cols;
     vector<vector<Cell>> cells;
-    std::mt19937 rng;
+    mt19937 rng;
 
 public:
     Grid(int r, int c) : rows(r), cols(c) {
@@ -95,13 +87,11 @@ public:
     const Cell& at(int r, int c) const { return cells[r][c]; }
 
     int random(int min, int max) {
-        std::uniform_int_distribution<int> dist(min, max);
+        uniform_int_distribution<int> dist(min, max);
         return dist(rng);
     }
 
     void linkCells(int r, int c, Direction d) {
-        if (!isValid(r, c)) return;
-
         int nr = r + DIRECTION_OFFSETS[d].second;
         int nc = c + DIRECTION_OFFSETS[d].first;
 
@@ -120,14 +110,14 @@ public:
             cout << "|";
             for (int c = 0; c < cols; c++) {
                 cout << "   ";
-                if (c < cols - 1 && cells[r][c].linked(EAST)) cout << " ";
+                if (c < cols - 1 && at(r,c).linked(EAST)) cout << " ";
                 else cout << "|";
             }
             cout << endl;
 
             cout << "+";
             for (int c = 0; c < cols; c++) {
-                if (r < rows - 1 && cells[r][c].linked(SOUTH)) cout << "   +";
+                if (r < rows - 1 && at(r,c).linked(SOUTH)) cout << "   +";
                 else cout << "---+";
             }
             cout << endl;

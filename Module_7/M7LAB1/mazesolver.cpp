@@ -1,54 +1,43 @@
 #include <iostream>
+#include <queue>
 #include <map>
 #include <set>
-#include <queue>
 #include <algorithm>
-#include "mazebuilder.cpp"   // include your builder
-
+#include <cmath>
+#include "mazebuilder.cpp"
 using namespace std;
 
-class Distances {
+class AStar {
 private:
-    map<pair<int,int>, int> dist;
-
-public:
-    void set(int r, int c, int d) { dist[{r,c}] = d; }
-    bool contains(int r, int c) const { return dist.count({r,c}); }
-    int get(int r, int c) const { return dist.at({r,c}); }
-
-    pair<int,int> farthest() const {
-        int maxD = -1;
-        pair<int,int> cell;
-        for (auto& p : dist) {
-            if (p.second > maxD) {
-                maxD = p.second;
-                cell = p.first;
-            }
-        }
-        return cell;
+    int heuristic(int r1, int c1, int r2, int c2) {
+        return abs(r1 - r2) + abs(c1 - c2);
     }
-};
 
-class Dijkstra {
 public:
-    Distances calculate(Grid& grid, int sr, int sc) {
-        Distances dist;
-        dist.set(sr, sc, 0);
+    vector<pair<int,int>> solve(Grid& grid, int sr, int sc, int gr, int gc) {
+        map<pair<int,int>, int> gScore;
+        map<pair<int,int>, pair<int,int>> cameFrom;
+
+        auto cmp = [](auto& a, auto& b) { return a.first > b.first; };
 
         priority_queue<
             pair<int, pair<int,int>>,
             vector<pair<int, pair<int,int>>>,
-            greater<pair<int, pair<int,int>>>
-        > pq;
+            decltype(cmp)
+        > openSet(cmp);
 
-        pq.push({0, {sr, sc}});
+        gScore[{sr, sc}] = 0;
+        openSet.push({heuristic(sr, sc, gr, gc), {sr, sc}});
 
-        while (!pq.empty()) {
-            auto [d, pos] = pq.top();
-            pq.pop();
+        while (!openSet.empty()) {
+            auto [f, pos] = openSet.top();
+            openSet.pop();
 
             int r = pos.first;
             int c = pos.second;
+
+            if (r == gr && c == gc)
+                break;
 
             const Cell& cell = grid.at(r, c);
 
@@ -58,54 +47,33 @@ public:
 
                 if (!grid.isValid(nr, nc)) continue;
 
-                int nd = d + 1;
+                int tentative = gScore[{r,c}] + 1;
 
-                if (!dist.contains(nr, nc)) {
-                    dist.set(nr, nc, nd);
-                    pq.push({nd, {nr, nc}});
+                if (!gScore.count({nr,nc}) || tentative < gScore[{nr,nc}]) {
+                    gScore[{nr,nc}] = tentative;
+                    cameFrom[{nr,nc}] = {r,c};
+
+                    int fScore = tentative + heuristic(nr, nc, gr, gc);
+                    openSet.push({fScore, {nr, nc}});
                 }
             }
         }
 
-        return dist;
-    }
-
-    vector<pair<int,int>> shortestPath(Grid& grid, int sr, int sc, int gr, int gc) {
-        Distances dist = calculate(grid, sr, sc);
+        if (!cameFrom.count({gr, gc}) && !(sr == gr && sc == gc)) {
+            return {};
+        }
 
         vector<pair<int,int>> path;
-        int r = gr, c = gc;
-        path.push_back({r,c});
+        pair<int,int> current = {gr, gc};
+        path.push_back(current);
 
-        while (!(r == sr && c == sc)) {
-            const Cell& cell = grid.at(r, c);
-            int d = dist.get(r, c);
-
-            for (Direction dir : cell.getLinks()) {
-                int nr = r + DIRECTION_OFFSETS[dir].second;
-                int nc = c + DIRECTION_OFFSETS[dir].first;
-
-                if (dist.contains(nr, nc) && dist.get(nr, nc) == d - 1) {
-                    r = nr;
-                    c = nc;
-                    path.push_back({r,c});
-                    break;
-                }
-            }
+        while (current != make_pair(sr, sc)) {
+            current = cameFrom[current];
+            path.push_back(current);
         }
 
         reverse(path.begin(), path.end());
         return path;
-    }
-
-    vector<pair<int,int>> longestPath(Grid& grid) {
-        auto d1 = calculate(grid, 0, 0);
-        auto A = d1.farthest();
-
-        auto d2 = calculate(grid, A.first, A.second);
-        auto B = d2.farthest();
-
-        return shortestPath(grid, A.first, A.second, B.first, B.second);
     }
 };
 
@@ -144,8 +112,8 @@ int main() {
     Grid grid(10, 10);
     BinaryTreeMaze::on(grid);
 
-    Dijkstra solver;
-    auto path = solver.longestPath(grid);
+    AStar solver;
+    auto path = solver.solve(grid, 0, 0, grid.getRows()-1, grid.getCols()-1);
 
     displayWithPath(grid, path);
 
