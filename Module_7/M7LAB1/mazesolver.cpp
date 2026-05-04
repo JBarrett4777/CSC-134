@@ -3,7 +3,7 @@
 #include <set>
 #include <queue>
 #include <algorithm>
-#include "MazeBuilder.cpp"   // include your builder
+#include "mazebuilder.cpp"   // include your builder
 
 using namespace std;
 
