@@ -1,8 +1,4 @@
 // CSC 134
-// M7HW1 - Question
+// M7HW1 - Project
 // Janiya Barrett
 // 5/4/26
-
-// options 
-// rooms
-// dailogue 
