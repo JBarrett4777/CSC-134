@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterMind: Minecraft Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mc-green: #3ea02a;
+            --mc-dirt: #3b2d23;
+            --mc-stone: #7a7a7a;
+            --mc-tnt: #ff0000;
+            --mc-diamond: #4de0e8;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background-color: #1a1a1a;
+            background-image: 
+                linear-gradient(45deg, #222 25%, transparent 25%), 
+                linear-gradient(-45deg, #222 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #222 75%), 
+                linear-gradient(-45deg, transparent 75%, #222 75%);
+            background-size: 40px 40px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        #game-container {
+            background: var(--mc-stone);
+            border: 6px solid #000;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: inset -4px -4px #444, inset 4px 4px #eee;
+        }
+
+        .hidden { display: none !important; }
+
+        h1 { color: var(--mc-diamond); font-size: 3.5rem; text-shadow: 3px 3px #000; margin-top: 0; }
+        
+        .btn {
+            font-family: 'VT323', monospace;
+            background: #bebebe;
+            border: 4px solid #000;
+            box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
+            color: #333;
+            padding: 10px 20px;
+            margin: 8px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            width: 80%;
+            transition: all 0.1s;
+        }
+
+        .btn:hover { background: var(--mc-green); color: white; }
+        .btn:active { box-shadow: inset 4px 4px #555, inset -4px -4px #fff; }
+
+        .difficulty-btn.easy { color: var(--mc-green); }
+        .difficulty-btn.medium { color: #d4af37; }
+        .difficulty-btn.hard { color: var(--mc-tnt); }
+
+        #timer { font-size: 2.5rem; color: var(--mc-tnt); margin: 10px 0; }
+        #xp-bar { font-size: 1.5rem; color: #b2ff59; margin-bottom: 15px; }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option-btn { width: auto; margin: 0; font-size: 1.2rem; }
+
+        input[type="text"] {
+            font-family: 'VT323', monospace;
+            background: #000;
+            color: var(--mc-green);
+            border: 2px solid var(--mc-stone);
+            padding: 10px;
+            font-size: 1.5rem;
+            width: 70%;
+            margin-bottom: 15px;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(0,0,0,0.5); }
+        th, td { padding: 8px; border: 2px solid #555; }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="menu-screen">
+        <h1>MINECRAFT QUIZ</h1>
+        <p style="font-size: 1.2rem;">Choose your difficulty to spawn:</p>
+        <button class="btn difficulty-btn easy" onclick="startGame('Easy')">Easy (Wood Hoe)</button>
+        <button class="btn difficulty-btn medium" onclick="startGame('Medium')">Medium (Iron Sword)</button>
+        <button class="btn difficulty-btn hard" onclick="startGame('Hard')">Hard (Netherite)</button>
+    </div>
+
+    <div id="quiz-screen" class="hidden">
+        <div id="timer">30</div>
+        <div id="xp-bar">XP: <span id="score-display">0</span></div>
+        <h2 id="question-text" style="font-size: 1.8rem; min-height: 80px;">Question?</h2>
+        <div id="options" class="options-container"></div>
+        <div id="feedback" style="height: 30px; margin-top: 10px; font-size: 1.4rem; font-weight: bold;"></div>
+    </div>
+
+    <div id="results-screen" class="hidden">
+        <h2 id="end-message" style="font-size: 2.5rem;">Game Over!</h2>
+        <p id="final-rank" style="font-size: 2rem; color: var(--mc-diamond);"></p>
+        <p id="final-score-text" style="font-size: 1.5rem;"></p>
+        
+        <div id="save-section">
+            <input type="text" id="player-name" placeholder="Enter Minecraft Name">
+            <button class="btn" style="width:auto; background: var(--mc-green); color:white;" onclick="saveHighScore()">Save Score</button>
+        </div>
+        
+        <h3>Hall of Fame</h3>
+        <table id="leaderboard-table">
+            <thead><tr><th>Player</th><th>XP</th></tr></thead>
+            <tbody id="leaderboard-body"></tbody>
+        </table>
+        
+        <button class="btn" style="margin-top:20px" onclick="location.reload()">Respawn (Play Again)</button>
+    </div>
+</div>
+
+<script>
+    /**
+     * STATE MANAGEMENT
+     */
+    let currentScore = 0;
+    let difficulty = "";
+    let timeRemaining = 0;
+    let questionIndex = 0;
+    let timerInterval = null;
+    let filteredQuestions = [];
+    let isGameOver = false;
+
+    const questionBank = [
+        // Easy
+        { q: "What tool is best for mining stone?", options: ["Axe", "Shovel", "Pickaxe", "Hoe"], correct: "Pickaxe", difficulty: "Easy" },
+        { q: "Which mob explodes when it gets close?", options: ["Zombie", "Skeleton", "Creeper", "Enderman"], correct: "Creeper", difficulty: "Easy" },
+        { q: "What do you need to start a fire?", options: ["Stick", "Flint and Steel", "Coal", "Torch"], correct: "Flint and Steel", difficulty: "Easy" },
+        { q: "How many blocks of wood make a crafting table?", options: ["1", "2", "4", "8"], correct: "4", difficulty: "Easy" },
+        { q: "Which animal produces wool?", options: ["Cow", "Pig", "Chicken", "Sheep"], correct: "Sheep", difficulty: "Easy" },
+
+        // Medium
+        { q: "How many obsidian blocks are needed for a minimum Nether Portal?", options: ["8", "10", "12", "14"], correct: "10", difficulty: "Medium" },
+        { q: "Which item allows you to fly in Survival?", options: ["Cape", "Elytra", "Feather", "Potion"], correct: "Elytra", difficulty: "Medium" },
+        { q: "What ore is required to trade with Piglins?", options: ["Diamond", "Iron", "Gold", "Emerald"], correct: "Gold", difficulty: "Medium" },
+        { q: "What food item can tame a Wolf?", options: ["Apple", "Bone", "Fish", "Carrot"], correct: "Bone", difficulty: "Medium" },
+        { q: "Which dimension contains 'End Cities'?", options: ["The Nether", "The Overworld", "The End", "The Void"], correct: "The End", difficulty: "Medium" },
+
+        // Hard
+        { q: "What is the maximum signal strength of Redstone?", options: ["10", "12", "15", "16"], correct: "15", difficulty: "Hard" },
+        { q: "Which block is used to craft a Beacon?", options: ["Iron Block", "Obsidian", "Nether Star", "Glass Block"], correct: "Nether Star", difficulty: "Hard" },
+        { q: "What is the specific height limit for building (Y-level)?", options: ["256", "319", "384", "512"], correct: "319", difficulty: "Hard" },
+        { q: "Which snapshot first introduced the Warden?", options: ["21w10a", "22w11a", "20w06a", "22w15a"], correct: "22w11a", difficulty: "Hard" },
+        { q: "Which potion requires a Fermented Spider Eye for 'Weakness'?", options: ["Strength", "Healing", "Water Bottle", "Mundane Potion"], correct: "Water Bottle", difficulty: "Hard" }
+    ];
+
+    /**
+     * CORE FUNCTIONS
+     */
+
+    function startGame(selectedDifficulty) {
+        // Reset state for a clean start
+        currentScore = 0;
+        questionIndex = 0;
+        isGameOver = false;
+        difficulty = selectedDifficulty;
+
+        // Filter and randomize questions slightly
+        filteredQuestions = questionBank.filter(q => q.difficulty === difficulty);
+        
+        // Timer settings
+        if (difficulty === "Easy") timeRemaining = 45;
+        else if (difficulty === "Medium") timeRemaining = 35;
+        else timeRemaining = 25;
+
+        // UI Transition
+        document.getElementById('menu-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.remove('hidden');
+        document.getElementById('score-display').innerText = "0";
+
+        startTimer();
+        renderQuestion();
+    }
+
+    function startTimer() {
+        const timerEl = document.getElementById('timer');
+        timerEl.innerText = timeRemaining;
+
+        if (timerInterval) clearInterval(timerInterval);
+
+        timerInterval = setInterval(() => {
+            timeRemaining--;
+            timerEl.innerText = timeRemaining;
+            if (timeRemaining <= 0) {
+                endGame("Time's Up!");
+            }
+        }, 1000);
+    }
+
+    function renderQuestion() {
+        if (questionIndex >= filteredQuestions.length) {
+            endGame("Quiz Complete!");
+            return;
+        }
+
+        const currentQ = filteredQuestions[questionIndex];
+        document.getElementById('question-text').innerText = currentQ.q;
+        
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = "";
+
+        currentQ.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = "btn option-btn";
+            btn.innerText = opt;
+            btn.onclick = () => validateAnswer(opt, currentQ.correct);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function validateAnswer(userChoice, correct) {
+        if (isGameOver) return;
+        const feedback = document.getElementById('feedback');
+        
+        if (userChoice === correct) {
+            let points = (difficulty === "Hard") ? 25 : (difficulty === "Medium") ? 15 : 10;
+            currentScore += points;
+            feedback.innerText = "Level Up!";
+            feedback.style.color = "#b2ff59";
+        } else {
+            feedback.innerText = "*Oof*";
+            feedback.style.color = "#ff4444"; // Fixed CSS var issue
+        }
+
+        document.getElementById('score-display').innerText = currentScore;
+        questionIndex++;
+        
+        // Delay slightly so player sees the feedback
+        setTimeout(() => {
+            feedback.innerText = "";
+            renderQuestion();
+        }, 700);
+    }
+
+    function endGame(message) {
+        isGameOver = true;
+        clearInterval(timerInterval);
+        
+        document.getElementById('quiz-screen').classList.add('hidden');
+        document.getElementById('results-screen').classList.remove('hidden');
+        document.getElementById('end-message').innerText = message;
+        
+        const rank = calculateRank();
+        document.getElementById('final-rank').innerText = `Rank: ${rank}`;
+        document.getElementById('final-score-text').innerText = `Total Experience: ${currentScore}`;
+        
+        loadLeaderboard();
+    }
+
+    function calculateRank() {
+        let maxPointsPerQ = (difficulty === "Hard") ? 25 : (difficulty === "Medium") ? 15 : 10;
+        const max = filteredQuestions.length * maxPointsPerQ;
+        const p = (currentScore / max) * 100;
+        
+        if (p >= 100) return "Server Admin";
+        if (p >= 80) return "Wither Slayer";
+        if (p >= 50) return "Iron Golem";
+        return "Dirt House Noob";
+    }
+
+    function saveHighScore() {
+        const nameInput = document.getElementById('player-name');
+        const name = nameInput.value.trim() || "Steve";
+        
+        const scores = JSON.parse(localStorage.getItem('mc_quiz_scores')) || [];
+        scores.push({ name, score: currentScore, diff: difficulty });
+        
+        // Sort by score and keep top 5
+        scores.sort((a, b) => b.score - a.score);
+        localStorage.setItem('mc_quiz_scores', JSON.stringify(scores.slice(0, 5)));
+        
+        document.getElementById('save-section').innerHTML = "<p style='color:#b2ff59'>Saved to World!</p>";
+        loadLeaderboard();
+    }
+
+    function loadLeaderboard() {
+        const scores = JSON.parse(localStorage.getItem('mc_quiz_scores')) || [];
+        const tbody = document.getElementById('leaderboard-body');
+        tbody.innerHTML = scores.map(s => 
+            `<tr><td>${s.name} (${s.diff})</td><td>${s.score}</td></tr>`
+        ).join('');
+    }
+</script>
+
+</body>
+</html>
